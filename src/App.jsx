@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from "react";
-import { RefreshCcw } from 'lucide-react';
+import { RefreshCcw } from "lucide-react";
 import Footer from "./components/Footer";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
 
       setPassword(pass);
     }
-  }, [length, numberAllowed, specialCase, setPassword]);
+  }, [length, numberAllowed, specialCase]);
 
   const copyPasswordToClipboard = useCallback(() => {
     passwordRef.current?.select();
@@ -34,70 +34,83 @@ function App() {
   useEffect(() => {
     passwordGenerator();
   }, [passwordGenerator, numberAllowed, specialCase, length]);
+
   return (
     <div className="bg-[url('/pass.jpg')] bg-cover min-h-screen flex flex-col">
-      <div className="w-full max-w-lg mx-auto shadow-md rounded-lg px-4 py-4 mt-20  bg-cyan-800 text-green-400">
-        <h1 className=" text-center my-3 font-bold uppercase text-2xl  text-yellow-500">Password generator</h1>
+      <div className="w-full max-w-lg sm:max-w-md md:max-w-lg mx-auto shadow-md rounded-lg px-4 py-6 mt-20 bg-cyan-800 text-green-400">
+        <h1 className="text-center my-3 font-bold uppercase text-xl sm:text-lg md:text-2xl text-yellow-500">
+          Password generator
+        </h1>
         <div className="flex shadow rounded-lg overflow-hidden mb-4 relative">
           <input
             type="text"
             value={password}
-            className="outline-none w-full py-2 px-3 mt-3 font-bold"
+            className="outline-none w-full py-2 px-3 font-bold text-sm md:text-base lg:text-lg"
             placeholder="Password"
             readOnly
             ref={passwordRef}
           />
-           <button
+          <button
             onClick={passwordGenerator}
-            className="absolute right-16 top-[61%] transform -translate-y-1/2 bg-transparent text-white px-2 py-1"
+            className="absolute right-16 top-1/2 transform -translate-y-1/2 bg-transparent text-white px-2 py-1"
           >
             <RefreshCcw size={20} className="text-black" />
           </button>
           <button
             onClick={copyPasswordToClipboard}
-            className="outline-none bg-blue-700 font-bold text-white px-3 py-0.5 mt-3 shrink-0"
+            className="outline-none bg-blue-700 font-bold text-white px-3 py-0.5 shrink-0 text-sm md:text-base"
           >
             Copy
           </button>
         </div>
-        <div className="flex text-sm gap-x-8 pt-5">
-          <div className="flex items-center gap-x-1 mb-8">
+
+        <div className="flex flex-col sm:flex-row sm:gap-x-8 pt-5">
+          <div className="flex flex-col sm:flex-row items-center gap-x-1 mb-4">
             <input
               type="range"
               min={6}
               max={100}
               value={length}
-              className="cursor-pointer "
-              onChange={(e) => {
-                setLength(e.target.value);
-              }}
+              className="cursor-pointer w-full sm:w-auto"
+              onChange={(e) => setLength(e.target.value)}
             />
-            <label className="font-bold">Length: {length}</label>
+            <label className="font-bold text-sm md:text-base mt-2 sm:mt-0">
+              Length: {length}
+            </label>
           </div>
-          <div className="flex items-center gap-x-1 mb-8">
+
+          <div className="flex items-center gap-x-1 mb-4">
             <input
               type="checkbox"
               defaultChecked={numberAllowed}
               id="numberInput"
-              onChange={() => {
-                setNumberAllowed((prev) => !prev);
-              }}
+              onChange={() => setNumberAllowed((prev) => !prev)}
             />
-            <label htmlFor="numberInput " className="font-bold">Numbers</label>
+            <label
+              htmlFor="numberInput"
+              className="font-bold text-sm md:text-base"
+            >
+              Numbers
+            </label>
           </div>
-          <div className="flex items-center gap-x-1 mb-8">
+
+          <div className="flex items-center gap-x-1 mb-4">
             <input
               type="checkbox"
               defaultChecked={specialCase}
               id="characterInput"
-              onChange={() => {
-                setSpecialCase((prev) => !prev);
-              }}
+              onChange={() => setSpecialCase((prev) => !prev)}
             />
-            <label htmlFor="characterInput" className="font-bold">Characters</label>
+            <label
+              htmlFor="characterInput"
+              className="font-bold text-sm md:text-base"
+            >
+              Characters
+            </label>
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );
